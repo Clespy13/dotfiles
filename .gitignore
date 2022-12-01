@@ -1,0 +1,17 @@
+*
+!.gitignore
+!*/
+.srcs/
+.cache/
+.cargo/
+.vscode/
+Dev/
+Downloads/
+Pictures/
+aur/
+dotfiles-2.0/
+
+!.bashrc
+!.viminfo
+!.vimrc
+!.xinitrc
