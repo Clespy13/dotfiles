@@ -197,6 +197,8 @@ exec_always --no-startup-id feh --randomize --bg-fill $HOME/wallpapers/
 
 exec_always --no-startup-id systemctl --user import-environment DISPLAY 
 
+exec_always --no-startup-id spicetify backup apply
+
 #bar {
 #    status_command i3status
 #}
