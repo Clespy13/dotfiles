@@ -34,8 +34,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-# Make FN Keys Work such as brightness and volume
-
 # Use pactl to adjust volume in PulseAudio.
 
 # Volume
@@ -46,8 +44,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brillo -A 10 && notify-send -r 1000 -t 500 -u low "Brightness - $(brillo | cut -d '.' -f 1)%"
-bindsym XF86MonBrightnessDown exec --no-startup-id brillo -U 10 && notify-send -r 1000 -t 500 -u low "Brightness - $(brillo | cut -d '.' -f 1)%"
+bindsym XF86MonBrightnessUp exec --no-startup-id brillo -A 5 && notify-send -r 1000 -t 500 -u low "Brightness - $(brillo | cut -d '.' -f 1)%"
+bindsym XF86MonBrightnessDown exec --no-startup-id brillo -U 5 && notify-send -r 1000 -t 500 -u low "Brightness - $(brillo | cut -d '.' -f 1)%"
 
 # Print key
 bindsym Print exec --no-startup-id flameshot full
