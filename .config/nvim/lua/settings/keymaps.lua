@@ -25,4 +25,6 @@ map("x", "<leader>p", "\"_dP")
 
 map("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
+map("n", "<F3>", ":NvimTreeToggle<CR>")
+map("n", "<F4>", ":NvimTreeFocus<CR>")
 
