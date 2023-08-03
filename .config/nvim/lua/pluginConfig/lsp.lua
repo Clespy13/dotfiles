@@ -25,3 +25,24 @@ end
 require("lspconfig").lua_ls.setup {
     on_attach = on_attach
 }
+
+require("lspconfig").clangd.setup {
+    on_attach = on_attach
+}
+
+require("lspconfig").pyre.setup {
+    on_attach = on_attach
+}
+
+require("lspconfig").rust_analyzer.setup {
+    on_attach = on_attach
+}
+
+require("lspconfig").marksman.setup {
+    on_attach = on_attach
+}
+
+require("lspconfig").cmake.setup {
+    on_attach = on_attach
+}
+
