@@ -9,6 +9,7 @@ return require('packer').startup(function(use)
   use 'rmehri01/onenord.nvim'
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-tree/nvim-tree.lua'
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   use {
       "williamboman/mason.nvim",
@@ -32,8 +33,15 @@ return require('packer').startup(function(use)
 
   use("RRethy/nvim-base16")
 
+  use('hrsh7th/nvim-cmp')
+  use('hrsh7th/cmp-buffer')
+  use('hrsh7th/cmp-path')
+  use('hrsh7th/cmp-nvim-lsp')
+  use('hrsh7th/cmp-nvim-lua')
+
+
  --[[
-  --use({
+  --use((
     --'rose-pine/neovim',
     --as = 'rose-pine',
     --config = function()

@@ -1,4 +1,4 @@
-local ok, _ = pcall(vim.cmd, 'colorscheme onenord')
+local ok, _ = pcall(vim.cmd, 'colorscheme catppuccin-mocha')
 
 -- Highlight the region on yank
 vim.api.nvim_create_autocmd("TextYankPost", {

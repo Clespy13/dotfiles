@@ -1,6 +1,7 @@
 local g = vim.g
 local o = vim.o
 local opt = vim.opt
+local cmd = vim.cmd
 
 o.termguicolors = true
 o.background = "dark"
@@ -24,7 +25,8 @@ o.wrap = true
 o.textwidth = 300
 o.tabstop = 4
 o.shiftwidth = 4
-o.softtabstop = -1
+o.softtabstop = 4
+o.cc = 80
 o.list = true
 o.listchars = "trail:·,nbsp:◇,tab:→ ,extends:▸,precedes:◂"
 
@@ -43,6 +45,22 @@ o.history = 50
 
 o.splitright = true
 o.splitbelow = true
+
+cmd [[
+    augroup save
+        autocmd!
+        au BufWritePost *.c :silent !clang-format -i %:p
+    augroup END
+
+    augroup remap
+        autocmd!
+        au VimEnter * :silent !setxkbmap -option caps:swapescape
+        au VimResume * :silent !setxkbmap -option caps:swapescape
+
+        au VimSuspend * :silent !setxkbmap -option
+        au VimLeave * :silent !setxkbmap -option
+    augroup END
+]]
 
 opt.mouse = "a"
 
