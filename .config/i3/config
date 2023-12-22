@@ -140,6 +140,13 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+assign [class="firefox"] $ws2
+assign [class="chromium"] $ws2
+assign [class="brave-browser-nightly"] $ws2
+assign [class="notion-app"] $ws3
+assign [class="discord"] $ws4
+assign [class="Spotify"] $ws5
+
 # switch to workspace
 bindsym $mod+ampersand workspace number $ws1
 bindsym $mod+eacute workspace number $ws2
@@ -200,6 +207,7 @@ bindsym $mod+r mode "resize"
 
 bindsym $mod+s exec "flameshot gui"
 bindsym $mod+l exec "betterlockscreen -l dim"
+bindsym $mod+n exec "networkmanager_dmenu"
 
 gaps inner 5
 gaps top 25
@@ -208,14 +216,18 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 exec_always --no-startup-id setxkbmap -layout fr
 exec_always --no-startup-id picom
+exec_always --no-startup-id flameshot
 exec_always --no-startup-id feh --randomize --bg-fill $HOME/wallpapers/
 
 exec_always --no-startup-id systemctl --user import-environment DISPLAY 
 
 exec_always --no-startup-id spicetify backup apply
 
-#bar {
-#    status_command i3status
-#}
+bar {
+    status_command i3status
+    font pango:Siji 15px
+    font pango:Font Awesome 6 Free 15px
+    font pango:Font Awesome v4 15px
+}
 
 for_window [class="^·*"] border pixel 0 # get rid of all borders of i3 windows
