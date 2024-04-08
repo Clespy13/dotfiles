@@ -1,6 +1,0 @@
-require("settings.base")
-require("settings.highlights")
-require("settings.keymaps")
-require("settings.plugins")
-require("pluginConfig.nvim-tree")
-require("pluginConfig.lsp")
