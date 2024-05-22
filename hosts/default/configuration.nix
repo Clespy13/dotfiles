@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -15,10 +16,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = [ "nvidia" ];
+  #boot.kernelModules = [ "nvidia" ];
   boot.kernelParams = [
-      "nvidia-drm.modeset=1"
-      "nvidia-drm.fbdev=1"
+    "nvidia-drm.modeset=1"
+    "nvidia-drm.fbdev=1"
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -67,7 +68,7 @@
     isNormalUser = true;
     description = "clem";
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   programs.zsh.enable = true;
@@ -87,19 +88,31 @@
 
   # Allow unfree packages
   nixpkgs.config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wayland-scanner wayland-utils xwayland
-    wlroots wlrctl wlr-protocols wlr-randr xdg-desktop-portal-wlr
-    egl-wayland glfw-wayland wine-wayland
-    way-displays jq
+    wayland-scanner
+    wayland-utils
+    xwayland
+    wlroots
+    wlrctl
+    wlr-protocols
+    wlr-randr
+    xdg-desktop-portal-wlr
+    egl-wayland
+    glfw-wayland
+    wine-wayland
+    way-displays
+    jq
+    drm_info
 
-    swayidle qt6.qtwayland wev
+    swayidle
+    qt6.qtwayland
+    wev
 
     nix-prefetch-git
     gparted
@@ -161,18 +174,18 @@
     dunst
     libnotify
     hyprpaper
-    (waybar.overrideAttrs (oldAttrs : {
+    (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      })
+    })
     )
   ];
 
   virtualisation.docker = {
+    enable = true;
+    rootless = {
       enable = true;
-      rootless = {
-          enable = true;
-          setSocketVariable = true;
-      };
+      setSocketVariable = true;
+    };
   };
 
   xdg.portal = {
@@ -188,11 +201,11 @@
   sound.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
 
   environment.variables = {
@@ -219,7 +232,10 @@
       modesetting.enable = true;
       open = false;
       prime = {
-        offload.enable = true;
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
         reverseSync.enable = true;
@@ -231,7 +247,9 @@
       driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [
-        libva vaapiVdpau mesa.drivers
+        libva
+        vaapiVdpau
+        mesa.drivers
       ];
     };
     opentabletdriver.enable = true;
@@ -264,7 +282,7 @@
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-#hardware.pulseaudio.enable = true;
+  #hardware.pulseaudio.enable = true;
   services.blueman.enable = true;
 
   programs.light.enable = true;
@@ -296,7 +314,7 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-#  networking.firewall.allowedTCPPorts = [ 22 ];
+  #  networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;

@@ -3,7 +3,7 @@
 {
   home = {
     sessionVariables = {
-      #BROWSER = "brave";
+      BROWSER = "brave";
       TERMINAL = "alacritty";
 
       XDG_CONFIG_HOME = "\${HOME}/.config";
