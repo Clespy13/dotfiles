@@ -6,6 +6,8 @@
       ./zsh.nix
       ./wayland.nix
       ./nvim.nix
+      ./waybar/waybar.nix
+      ./mako/mako.nix
     ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -37,6 +39,12 @@
     rofi-wayland
     qt6.qtwayland
     electron
+
+    hyprpicker
+    hyprpaper
+    hypridle
+    hyprlock
+    hyprcursor
 
     #system
     htop
@@ -172,6 +180,10 @@
 
       bind -n C-l send-keys 'C-l'
 
+      bind v split-window -v -c "#{pane_current_path}"
+      bind h split-window -h -c "#{pane_current_path}"
+      unbind '"'
+      unbind %
     '';
   };
 

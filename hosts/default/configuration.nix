@@ -109,6 +109,8 @@
     way-displays
     jq
     drm_info
+    acpi
+    acpid
 
     swayidle
     qt6.qtwayland
@@ -173,7 +175,6 @@
 
     dunst
     libnotify
-    hyprpaper
     (waybar.overrideAttrs (oldAttrs: {
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     })
@@ -216,6 +217,7 @@
   fonts.packages = with pkgs; [
     fira-code
     fira-code-symbols
+    font-awesome
     dejavu_fonts
     ipafont
     noto-fonts
