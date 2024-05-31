@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstable, ... }:
 
 {
   imports =
@@ -28,8 +28,7 @@
   # environment.
   home.packages = with pkgs; [
     # wayland
-    waybar
-    swaylock
+    unstable.waybar
     wayidle
     wl-clipboard
     xdg-desktop-portal-hyprland
@@ -39,12 +38,13 @@
     rofi-wayland
     qt6.qtwayland
     electron
+    xwayland
 
     hyprpicker
     hyprpaper
-    hypridle
-    hyprlock
-    hyprcursor
+    unstable.hypridle
+    unstable.hyprlock
+    unstable.hyprcursor
 
     #system
     htop
@@ -83,9 +83,6 @@
     bear
     gdb
     clang-tools
-
-    #npm
-    nodejs_21
 
     #python
     python3

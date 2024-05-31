@@ -2,7 +2,7 @@
 {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     historySubstringSearch = {
       enable = true;
@@ -20,6 +20,10 @@
     loginExtra = ''
       [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
     '';
+
+    shellAliases = {
+      update = "sudo nixos-rebuild boot --flake /home/$USER/.config/nixos#default";
+    };
 
     plugins = [
       {

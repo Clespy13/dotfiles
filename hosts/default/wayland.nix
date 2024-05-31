@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, unstable, pkgs, ... }:
 {
   imports = [
     (import ../../modules/environment/common-variables.nix)
@@ -32,6 +32,7 @@
     enable = true;
     systemd.enable = true;
     xwayland.enable = true;
+    package = unstable.hyprland;
     settings = import ./config.nix;
   };
 }

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, unstable, ... }:
 
 {
   imports =
@@ -13,16 +13,48 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    kernelModules = [ "nvidia" "nvidia_drm" ];
+    kernelParams = [
+      "usbcore.autosuspend=-1"
+    ];
+    kernelPackages = pkgs.linuxPackages_latest;
+    supportedFilesystems = [ "ntfs" ];
+    initrd.verbose = false;
+    consoleLogLevel = 0;
+
+    bootspec.enable = true;
+
+    loader = {
+      grub = {
+        enable = lib.mkForce false;
+        device = "nodev";
+        useOSProber = true;
+        efiSupport = true;
+      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    #lanzaboote = {
+    #  enable = true;
+    #  pkiBundle = "/etc/secureboot";
+    #};
+  };
+
+  #boot.loader.systemd-boot.enable = true;
+  #boot.loader.efi.canTouchEfiVariables = true;
 
   #boot.kernelModules = [ "nvidia" ];
-  boot.kernelParams = [
-    "nvidia-drm.modeset=1"
-    "nvidia-drm.fbdev=1"
-  ];
+  #boot.kernelParams = [
+  #  "nvidia-drm.modeset=1"
+  #  "nvidia-drm.fbdev=1"
+  #  "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+  #];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  ##boot.blacklistedKernelModules = [ "nouveau" ];
+
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -76,14 +108,10 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs unstable; };
     users = {
       "clem" = import ./home.nix;
     };
-  };
-
-  security.pam.services.swaylock = {
-    text = "auth include login";
   };
 
   # Allow unfree packages
@@ -97,12 +125,12 @@
   environment.systemPackages = with pkgs; [
     wayland-scanner
     wayland-utils
-    xwayland
     wlroots
     wlrctl
     wlr-protocols
     wlr-randr
     xdg-desktop-portal-wlr
+    xdg-utils
     egl-wayland
     glfw-wayland
     wine-wayland
@@ -111,6 +139,7 @@
     drm_info
     acpi
     acpid
+    flatpak
 
     swayidle
     qt6.qtwayland
@@ -133,7 +162,6 @@
     qt6.qtwayland
     libsForQt5.kwayland-integration
     libsForQt5.kwayland
-    xwayland
     wayland
     wayland-utils
     libsForQt5.qt5ct
@@ -146,6 +174,10 @@
     nvidia-vaapi-driver
     intel-vaapi-driver
     intel-media-driver
+    linuxHeaders
+    linux-firmware
+    pciutils
+    nvtopPackages.full
 
     pamixer
     playerctl
@@ -230,6 +262,7 @@
 
   hardware = {
     nvidia = {
+      forceFullCompositionPipeline = true;
       nvidiaSettings = true;
       modesetting.enable = true;
       open = false;
@@ -243,6 +276,7 @@
         reverseSync.enable = true;
       };
       powerManagement.enable = true;
+      powerManagement.finegrained = true;
     };
     opengl = {
       enable = true;
@@ -320,6 +354,14 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+
+  services.printing.enable = true;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
