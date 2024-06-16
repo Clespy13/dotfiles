@@ -23,6 +23,7 @@
 
     shellAliases = {
       update = "sudo nixos-rebuild boot --flake /home/$USER/.config/nixos#default";
+      steam = "env --unset=SDL_VIDEODRIVER steam";
     };
 
     plugins = [

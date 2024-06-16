@@ -84,23 +84,20 @@
     gdb
     clang-tools
 
-    #python
-    python3
-    python311Packages.pyyaml
-    python311Packages.pytest
-    python311Packages.pip
-
     #lua
     lua
 
     #misc
     poetry
+    obsidian
     prismlauncher
-    appflowy
+    unstable.appflowy
     lolcat
     asciiquarium
     ocaml
     opam
+    spotify
+    slack
   ];
 
   home.sessionVariables = {
