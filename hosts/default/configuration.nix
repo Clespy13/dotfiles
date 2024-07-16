@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, unstable, ... }:
+{ config, pkgs, lib, inputs, unstable, options, ... }:
 
 {
   imports =
@@ -192,7 +192,6 @@
     openjdk17-bootstrap
     jdk17
 
-    jetbrains.rider
     dotnet-sdk_7
     dotnet-runtime_7
     dotnet-aspnetcore_7
@@ -253,6 +252,8 @@
   environment.variables = {
     ACLOCAL_PATH = "${pkgs.autoconf-archive}/share/aclocal:${pkgs.autoconf}/share/aclocal:${pkgs.automake}/share/aclocal";
   };
+
+  environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.brave}/bin/brave";
 
 
   fonts.packages = with pkgs; [
@@ -366,11 +367,119 @@
 
   services.printing.enable = true;
 
+  programs.nix-ld.enable = true;
+
+  programs.nix-ld.libraries = options.programs.nix-ld.libraries.default ++ (with pkgs; [
+    # put here missing libraries
+    stdenv.cc.cc
+    openssl
+    xorg.libXcomposite
+    xorg.libXtst
+    xorg.libXrandr
+    xorg.libXext
+    xorg.libX11
+    xorg.libXfixes
+    libGL
+    libva
+    xorg.libxcb
+    xorg.libXdamage
+    xorg.libxshmfence
+    xorg.libXxf86vm
+    libelf
+
+    # Required
+    glib
+    gtk3
+    bzip2
+
+    # Without these it silently fails
+    xorg.libXinerama
+    xorg.libXcursor
+    xorg.libXrender
+    xorg.libXScrnSaver
+    xorg.libXi
+    xorg.libSM
+    xorg.libICE
+    gnome2.GConf
+    nspr
+    nss
+    cups
+    libcap
+    SDL2
+    libusb1
+    dbus-glib
+    ffmpeg
+    # Only libraries are needed from those two
+    libudev0-shim
+
+    # Verified games requirements
+    xorg.libXt
+    xorg.libXmu
+    libogg
+    libvorbis
+    SDL
+    SDL2_image
+    glew110
+    libidn
+    tbb
+
+    # Other things from runtime
+    flac
+    freeglut
+    libjpeg
+    libpng
+    libpng12
+    libsamplerate
+    libmikmod
+    libtheora
+    libtiff
+    pixman
+    speex
+    SDL_image
+    SDL_ttf
+    SDL_mixer
+    SDL2_ttf
+    SDL2_mixer
+    libappindicator-gtk2
+    libdbusmenu-gtk2
+    libindicator-gtk2
+    libcaca
+    libcanberra
+    libgcrypt
+    libvpx
+    librsvg
+    xorg.libXft
+    libvdpau
+    gnome2.pango
+    cairo
+    atk
+    gdk-pixbuf
+    fontconfig
+    freetype
+    dbus
+    alsaLib
+    expat
+    # Needed for electron
+    libdrm
+    mesa
+    libxkbcommon
+  ]);
+
   services.avahi = {
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
   };
+
+
+  xdg.mime.defaultApplications = {
+    "text/html" = "brave.desktop";
+    "x-scheme-handler/http" = "brave-browser.desktop";
+    "x-scheme-handler/https" = "brave-browser.desktop";
+    "x-scheme-handler/about" = "brave-browser.desktop";
+    "x-scheme-handler/unknown" = "brave-browser.desktop";
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

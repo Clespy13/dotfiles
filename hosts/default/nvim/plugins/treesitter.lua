@@ -8,9 +8,7 @@
 --
 -- File: plugins/treesitter.lua
 -- Description: nvim-treesitter configuration
-return {{
-    -- Treesitter interface
-    "nvim-treesitter/nvim-treesitter",
+require('nvim-treesitter') {
     version = false, -- last release is way too old and doesn"t work on Windows
     build = ":TSUpdate",
     opts = {
@@ -43,4 +41,4 @@ return {{
     config = function(_, opts)
         require("nvim-treesitter.configs").setup(opts)
     end
-}}
+}

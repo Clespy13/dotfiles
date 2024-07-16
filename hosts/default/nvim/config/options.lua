@@ -20,6 +20,9 @@ cmd([[
 	filetype plugin indent on
 ]])
 
+g.mapleader = " "
+opt.termguicolors = true
+
 opt.backspace = {"eol", "start", "indent"} -- allow backspacing over everything in insert mode
 opt.clipboard = "unnamedplus" -- allow neovim to access the system clipboard
 vim.opt.fileencoding = "utf-8" -- the encoding written to a file
@@ -117,7 +120,3 @@ local disabled_built_ins = {"2html_plugin", "getscript", "getscriptPlugin", "gzi
 for _, plugin in pairs(disabled_built_ins) do
     g["loaded_" .. plugin] = 1
 end
-
--- Colorscheme
--- By default, use catppuccin-mocha
-vim.cmd 'colorscheme catppuccin-mocha'

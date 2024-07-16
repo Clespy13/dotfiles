@@ -1,13 +1,19 @@
 { config, pkgs, ... }:
 {
+  home.packages = with pkgs; [
+    zinit
+  ];
+
+  programs.zoxide.enable = true;
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;
     historySubstringSearch = {
       enable = true;
-      searchUpKey = [ "\\eOA" ];
-      searchDownKey = [ "\\eOB" ];
+      searchUpKey = [ "^[OA" "^[[A" ];
+      searchDownKey = [ "^[OB" "^[[B"];
     };
 
     envExtra = ''
@@ -21,9 +27,44 @@
       [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
     '';
 
+    initExtra = ''
+      if [ -f $HOME/.zsh/test.sh ]; then
+        source $HOME/.zsh/test.sh
+      fi
+
+      # Add in snippets
+      zinit snippet OMZP::git
+      zinit snippet OMZP::sudo
+      zinit snippet OMZP::archlinux
+      zinit snippet OMZP::aws
+      zinit snippet OMZP::kubectl
+      zinit snippet OMZP::kubectx
+      zinit snippet OMZP::command-not-found
+
+      eval "$(zoxide init --cmd cd zsh)"
+      eval "$(fzf --zsh)"
+      eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/config.toml)"
+      eval $(dircolors -b)
+
+      bindkey '^f' autosuggest-accept
+
+      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+      zstyle ':completion:*' menu no
+    '';
+
     shellAliases = {
-      update = "sudo nixos-rebuild boot --flake /home/$USER/.config/nixos#default";
+      update = "sudo nixos-rebuild switch --flake /home/$USER/.config/nixos#default";
+      upgrade = "sudo nixos-rebuild boot --flake /home/$USER/.config/nixos#default --upgrade";
       steam = "env --unset=SDL_VIDEODRIVER steam";
+      ls = "ls --color";
+    };
+
+    history = {
+      size = 10000;
+      path = "$HOME/.zsh_history";
+      ignoreDups = true;
+      ignoreAllDups = true;
+      share = true;
     };
 
     plugins = [
@@ -56,15 +97,34 @@
           sha256 = "1lzrn0n4fxfcgg65v0qhnj7wnybybqzs4adz7xsrkgmcsr0ii8b7";
         };
       }
+      {
+        name = "fzf-tab";
+        src = pkgs.fetchFromGitHub {
+          owner = "Aloxaf";
+          repo = "fzf-tab";
+          rev = "14e16f0d36ae9938e28b2f6efdb7344cd527a1a6";
+          sha256 = "0cp2f7qrggpn8sdi57v5a4qf8dbhqjc06py5ihxp5qkw76fn1j53";
+        };
+      }
     ];
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" ];
-      theme = "custom-gnzh";
-      custom = "$HOME/.omz";
-      extraConfig = ''
-        eval "$(zoxide init --cmd cd zsh)"
-      '';
+    # oh-my-zsh = {
+    #   enable = true;
+    #   plugins = [ "git" ];
+    #   theme = "gnzh";
+    #   custom = "$HOME/.omz";
+    #   extraConfig = ''
+    #
+    #
+    #   '';
+    # };
+  };
+
+  home = {
+    file = {
+      ".zsh" = {
+        source = ./zsh;
+        recursive = true;
+      };
     };
   };
 }

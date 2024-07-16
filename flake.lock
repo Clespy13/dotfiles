@@ -53,11 +53,28 @@
         "type": "github"
       }
     },
+    "plugin-tiger-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1522726646,
+        "narHash": "sha256-jd0e8U6MEMKdUm8bKwVdO8PRVGvLouY1PpS0G41Je1o=",
+        "owner": "chclouse",
+        "repo": "tiger-vim",
+        "rev": "568f7b39ba53fea28ebd910bb48c8d2f48d79059",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chclouse",
+        "repo": "tiger-vim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "plugin-tiger-vim": "plugin-tiger-vim"
       }
     }
   },

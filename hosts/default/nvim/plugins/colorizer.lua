@@ -6,20 +6,15 @@
 -- ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
 -- ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝
 --
--- File: plugins/telescope.lua
--- Description: nvim-telescope config
-return {{
-    -- Telescope
-    -- Find, Filter, Preview, Pick. All lua, all the time.
-    "nvim-telescope/telescope.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make"
-    }},
+-- File: plugins/colorizer.lua
+-- Description: nvim-colorizer config
+require('colorizer').setup { -- colorizer
     config = function(_)
-        require("telescope").setup()
-        -- To get fzf loaded and working with telescope, you need to call
-        -- load_extension, somewhere after setup function:
-        require("telescope").load_extension("fzf")
+        require("colorizer").setup()
+
+        -- execute colorizer as soon as possible
+        vim.defer_fn(function()
+            require("colorizer").attach_to_buffer(0)
+        end, 0)
     end
-}}
+}

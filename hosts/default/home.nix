@@ -3,7 +3,9 @@
 {
   imports =
     [
+      ./fzf.nix
       ./zsh.nix
+      ./omp.nix
       ./wayland.nix
       ./nvim.nix
       ./waybar/waybar.nix
@@ -27,15 +29,16 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # wayland
+    wayland
     unstable.waybar
     wayidle
     wl-clipboard
+    rofi-wayland
+    rofimoji
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
     xdg-desktop-portal-wlr
     xwaylandvideobridge
-    rofi-wayland
     qt6.qtwayland
     electron
     xwayland
@@ -58,7 +61,6 @@
     alacritty
     pipewire
     wireplumber
-    zoxide
     ripgrep
     fd
 
@@ -87,15 +89,15 @@
     #lua
     lua
 
-    #misc
+    ##misc
+    go
+    python311
     poetry
-    obsidian
+    nodejs_22
     prismlauncher
     unstable.appflowy
     lolcat
     asciiquarium
-    ocaml
-    opam
     spotify
     slack
   ];
