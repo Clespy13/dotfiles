@@ -100,6 +100,7 @@
     asciiquarium
     spotify
     slack
+    notion-app-enhanced
   ];
 
   home.sessionVariables = {

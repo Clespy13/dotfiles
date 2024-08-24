@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, inputs, unstable, options, ... }:
-
 {
   imports =
     [
@@ -26,20 +25,14 @@
     bootspec.enable = true;
 
     loader = {
-      grub = {
-        enable = lib.mkForce false;
-        device = "nodev";
-        useOSProber = true;
-        efiSupport = true;
-      };
-      systemd-boot.enable = true;
+      systemd-boot.enable = lib.mkForce false;
       efi.canTouchEfiVariables = true;
     };
 
-    #lanzaboote = {
-    #  enable = true;
-    #  pkiBundle = "/etc/secureboot";
-    #};
+    #   lanzaboote = {
+    #     enable = true;
+    #     pkiBundle = "/etc/secureboot";
+    #   };
   };
 
   #boot.loader.systemd-boot.enable = true;
@@ -103,8 +96,8 @@
     packages = with pkgs; [ ];
   };
 
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  #programs.zsh.enable = true;
+  #users.defaultUserShell = pkgs.zsh;
 
   home-manager = {
     useGlobalPkgs = true;
@@ -123,27 +116,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wayland-scanner
-    wayland-utils
-    wlroots
-    wlrctl
-    wlr-protocols
-    wlr-randr
-    xdg-desktop-portal-wlr
-    xdg-utils
-    egl-wayland
-    glfw-wayland
-    wine-wayland
-    way-displays
+    sbctl
     jq
     drm_info
     acpi
     acpid
     flatpak
-
-    swayidle
-    qt6.qtwayland
-    wev
 
     nix-prefetch-git
     gparted
@@ -151,19 +129,13 @@
 
     vim
     wget
-    firefox
-    brave
     sway-contrib.grimshot
-    unzip
-    discord
     ncdu
     vscode.fhs
     libsForQt5.qt5.qtwayland
     qt6.qtwayland
     libsForQt5.kwayland-integration
     libsForQt5.kwayland
-    wayland
-    wayland-utils
     libsForQt5.qt5ct
     libva
     libva1
@@ -254,7 +226,6 @@
   };
 
   environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.brave}/bin/brave";
-
 
   fonts.packages = with pkgs; [
     fira-code
@@ -472,13 +443,13 @@
   };
 
 
-  xdg.mime.defaultApplications = {
-    "text/html" = "brave.desktop";
-    "x-scheme-handler/http" = "brave-browser.desktop";
-    "x-scheme-handler/https" = "brave-browser.desktop";
-    "x-scheme-handler/about" = "brave-browser.desktop";
-    "x-scheme-handler/unknown" = "brave-browser.desktop";
-  };
+  #xdg.mime.defaultApplications = {
+  #  "text/html" = "brave.desktop";
+  #  "x-scheme-handler/http" = "brave-browser.desktop";
+  #  "x-scheme-handler/https" = "brave-browser.desktop";
+  #  "x-scheme-handler/about" = "brave-browser.desktop";
+  #  "x-scheme-handler/unknown" = "brave-browser.desktop";
+  #};
 
 
   # This value determines the NixOS release from which the default

@@ -60,7 +60,10 @@
         dockerfile-language-server-nodejs
         cmake-language-server
         ansible-language-server
+        csslint
+        nodePackages.vscode-langservers-extracted
         libclang
+        pyright
 
         xclip
         wl-clipboard

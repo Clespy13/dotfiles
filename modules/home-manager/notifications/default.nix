@@ -1,0 +1,3 @@
+{
+  mako = import ./mako;
+}

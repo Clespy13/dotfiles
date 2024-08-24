@@ -14,8 +14,9 @@
     plugin-tiger-vim.flake = false;
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
+      inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
@@ -26,13 +27,25 @@
       };
     in
     {
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
+
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs unstable; };
+        specialArgs = { inherit inputs unstable outputs; };
         modules = [
-          ./hosts/default/configuration.nix
-          inputs.home-manager.nixosModules.default
+          ./profiles/personal
         ];
       };
 
+      homeConfigurations = {
+        # replace with your username@hostname
+        "clem@nixos" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgs; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = {inherit inputs outputs unstable;};
+          modules = [
+            ./profiles/personal/home.nix
+          ];
+        };
+      };
     };
 }
