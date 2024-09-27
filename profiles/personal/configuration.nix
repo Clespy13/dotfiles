@@ -6,6 +6,7 @@
 {
   imports =
     [
+      <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
@@ -35,6 +36,8 @@
     #     pkiBundle = "/etc/secureboot";
     #   };
   };
+
+   nixpkgs.config.allowUnsupportedSystem = true;
 
   #boot.loader.systemd-boot.enable = true;
   #boot.loader.efi.canTouchEfiVariables = true;
@@ -93,7 +96,7 @@
   users.users.clem = {
     isNormalUser = true;
     description = "clem";
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" "scanner" "lp" ];
     packages = with pkgs; [ ];
   };
 
@@ -440,6 +443,18 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+  };
+
+  hardware = {
+    sane = {
+      enable = true;
+      brscan4 = {
+        enable = true;
+        netDevices = {
+          home = { model = "DCP-J752DW"; ip = "192.168.001.013"; };
+        };
+      };
+    };
   };
 
 

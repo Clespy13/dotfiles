@@ -78,6 +78,11 @@ require('lspconfig').dockerls.setup {
   capabilities = capabilities,
 }
 
+require('lspconfig').docker_compose_language_service.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
 require('lspconfig').cmake.setup {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -89,6 +94,21 @@ require('lspconfig').html.setup {
 }
 
 require('lspconfig').cssls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require('lspconfig').jinja_lsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require('lspconfig').nixd.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require('lspconfig').nil_ls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
 }
