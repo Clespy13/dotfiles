@@ -1,3 +1,6 @@
+{ ... }:
 {
-  mako = import ./mako;
+  imports = [
+    ./mako
+  ];
 }

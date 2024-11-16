@@ -1,11 +1,20 @@
-{pkgs, ...}
+{pkgs, ...}:
 {
-  notifications = import ./notifications;
-  wm = import ./wm;
-  app = import ./app;
-  code = import ./code.nix;
-  hardware = import ./hardware;
-  shell = import ./shell;
+  imports = [
+    ./notifications
+    ./wm
+    ./applications
+    ./code.nix
+    ./hardware
+    ./shell
+  ];
+
+  # notifications = import ./notifications;
+  # wm = import ./wm;
+  # applications = import ./applications;
+  # code = import ./code.nix;
+  # hardware = import ./hardware;
+  # shell = import ./shell;
 
   home.packages = with pkgs; [
     htop
@@ -19,5 +28,6 @@
     wireplumber
     ripgrep
     fd
+    direnv
   ];
 }

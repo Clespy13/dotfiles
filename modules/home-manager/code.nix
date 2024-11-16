@@ -12,7 +12,6 @@
       pkg-config
       autoconf
       autoconf-archive
-      mako
       ninja
       meson
       meson-tools

@@ -1,3 +1,6 @@
+{ ... }:
 {
-  hyprland = import ./hyprland;
+  imports = [
+    ./hyprland
+  ];
 }

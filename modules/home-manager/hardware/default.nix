@@ -1,3 +1,6 @@
+{ ... }:
 {
-  bluetooth = import ./bluetooth.nix;
+  imports = [
+    ./bluetooth.nix
+  ];
 }

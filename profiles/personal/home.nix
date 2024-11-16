@@ -1,9 +1,6 @@
 { config, pkgs, unstable, outputs, ... }:
 {
-  imports =
-  [
-  ]
-  ++ (builtins.attrValues outputs.homeManagerModules);
+  imports = [];
 
   home.username = "clem";
   home.homeDirectory = "/home/clem";
@@ -15,15 +12,13 @@
     TERM = "alacritty";
   };
 
-  notifications = {
-    mako.enable = true;
-  };
+  notifications.mako.enable = true;
   hyprland.enable = true;
   firefox.enable = true;
   #brave.enable = true;
   fzf.enable = true;
   code.enable = true;
-  misc.enable = true;
+  misc.enable = false;
   nvim.enable = true;
   tmux.enable = true;
   waybar.enable = true;

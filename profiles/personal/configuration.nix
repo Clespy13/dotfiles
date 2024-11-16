@@ -6,12 +6,11 @@
 {
   imports =
     [
-      <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
+      # <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
-    ]
-    ++ (builtins.attrValues outputs.nixosModules);
+    ];
 
   # Bootloader.
   boot = {
@@ -177,7 +176,6 @@
     zulu8
     wdisplays
 
-    dunst
     brightnessctl
     libnotify
     (waybar.overrideAttrs (oldAttrs: {
@@ -185,7 +183,7 @@
     })
     )
     brave
-    discord
+    vesktop
   ];
 
   virtualisation.docker = {
@@ -246,6 +244,14 @@
 
   hardware = {
     nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "555.58.02";
+        sha256_64bit = "sha256-xctt4TPRlOJ6r5S54h5W6PT6/3Zy2R4ASNFPu8TSHKM=";
+        sha256_aarch64 = "sha256-wb20isMrRg8PeQBU96lWJzBMkjfySAUaqt4EgZnhyF8=";
+        openSha256 = "sha256-8hyRiGB+m2hL3c9MDA/Pon+Xl6E788MZ50WrrAGUVuY=";
+        settingsSha256 = "sha256-ZpuVZybW6CFN/gz9rx+UJvQ715FZnAOYfHn5jt5Z2C8=";
+        persistencedSha256 = "sha256-a1D7ZZmcKFWfPjjH1REqPM5j/YLWKnbkP9qfRyIyxAw=";
+      };
       forceFullCompositionPipeline = true;
       nvidiaSettings = true;
       modesetting.enable = true;
@@ -465,7 +471,6 @@
     "x-scheme-handler/about" = "brave-browser.desktop";
     "x-scheme-handler/unknown" = "brave-browser.desktop";
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
