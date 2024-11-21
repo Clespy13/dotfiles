@@ -17,9 +17,11 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
+        config.allowUnfree = true;
       };
 
       unstable = import inputs.nixpkgs-unstable {
@@ -27,18 +29,24 @@
         config.allowUnfree = true;
       };
 
-      helperLib = import ./helperLib/default.nix { inherit inputs unstable; };
     in
-      with helperLib; {
-        nixosModules.default = ./modules/nixos;
-        homeManagerModules.default = ./modules/home-manager;
+      rec {
+        inherit lib;
+
+        nixosModules = ./modules/nixos;
+        homeManagerModules = import ./modules/home-manager;
 
         nixosConfigurations = {
-          nixos = mkSystem ./profiles/personal/configuration.nix;
-        };
-
-        homeConfigurations = {
-          "clem@nixos" = mkHome "x86_64-linux" ./profiles/personal/home.nix;
+          nixos = lib.nixosSystem {
+            modules = [
+              ./profiles/personal
+              nixosModules
+              home-manager.nixosModules.default
+            ];
+            specialArgs = {
+              inherit inputs outputs unstable;
+            };
+          };
         };
     };
 }

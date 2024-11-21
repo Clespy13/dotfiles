@@ -1,11 +1,11 @@
 {pkgs, lib, config, ...}:
 {
-  options = {
+  options.myHome = {
     bluetooth.enable =
       lib.mkEnableOption "Enable bluetooth";
   };
 
-  config = lib.mkIf config.bluetooth.enable {
+  config = lib.mkIf config.myHome.bluetooth.enable {
     systemd.user.services.mpris-proxy = {
       Unit = {
         Description =

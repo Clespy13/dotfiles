@@ -1,11 +1,11 @@
 { config, lib, unstable, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     hyprland.enable =
       lib.mkEnableOption "Enable Hyprland";
   };
 
-  config = lib.mkIf config.hyprland.enable {
+  config = lib.mkIf config.myHome.hyprland.enable {
     gtk = {
       enable = true;
       theme = {

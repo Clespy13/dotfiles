@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     tmux.enable =
       lib.mkEnableOption "Enable tmux";
   };
 
-  config = lib.mkIf config.tmux.enable {
+  config = lib.mkIf config.myHome.tmux.enable {
     programs.tmux = {
       enable = true;
       clock24 = true;

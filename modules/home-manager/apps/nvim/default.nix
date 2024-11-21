@@ -1,11 +1,11 @@
 { config, lib, pkgs, inputs, ... }:
 {
-  options = {
+  options.myHome = {
     nvim.enable =
       lib.mkEnableOption "Enable nvim";
   };
 
-  config = lib.mkIf config.nvim.enable {
+  config = lib.mkIf config.myHome.nvim.enable {
     programs.neovim =
       let
         toLua = str: "lua << EOF\n${str}\nEOF\n";

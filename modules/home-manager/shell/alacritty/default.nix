@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     alacritty.enable =
       lib.mkEnableOption "Enable alacritty";
   };
 
-  config = lib.mkIf config.alacritty.enable {
+  config = lib.mkIf config.myHome.alacritty.enable {
     programs.alacritty = {
       enable = true;
       settings = {

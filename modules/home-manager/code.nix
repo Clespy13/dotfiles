@@ -1,11 +1,10 @@
 {pkgs, lib, config, ...}:
 {
-  options = {
-    code.enable =
-      lib.mkEnableOption "Enable coding utilities";
-  };
+  options.myHome.code.enable = lib.mkEnableOption "Enable coding utilities";
 
-  config = lib.mkIf config.code.enable {
+  config = lib.mkIf config.myHome.code.enable {
+    programs.home-manager.enable = true;
+
     home.packages = with pkgs; [
       automake
       cargo

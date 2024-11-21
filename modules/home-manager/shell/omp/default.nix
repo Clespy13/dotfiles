@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     oh-my-posh.enable =
       lib.mkEnableOption "Enable Oh-My-Posh";
   };
 
-  config = lib.mkIf config.oh-my-posh.enable {
+  config = lib.mkIf config.myHome.oh-my-posh.enable {
     programs.oh-my-posh = {
       enable = true;
     };

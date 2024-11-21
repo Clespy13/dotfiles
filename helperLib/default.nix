@@ -11,19 +11,8 @@ in rec {
       };
       modules = [
         config
-        outputs.nixosModules.default
-      ];
-    };
-
-  mkHome = sys: config:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgsFor sys;
-      extraSpecialArgs = {
-        inherit inputs helperLib outputs unstable;
-      };
-      modules = [
-        config
-        outputs.homeManagerModules.default
+        outputs.nixosModules
+        inputs.home-manager.nixosModules.default
       ];
     };
 

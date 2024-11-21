@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     zsh.enable =
       lib.mkEnableOption "Enable zsh";
   };
 
-  config = lib.mkIf config.zsh.enable {
+  config = lib.mkIf config.myHome.zsh.enable {
     home.packages = with pkgs; [
       zinit
     ];

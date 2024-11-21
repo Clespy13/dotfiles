@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 {
-  options = {
+  options.myHome = {
     waybar.enable =
       lib.mkEnableOption "Enable waybar";
   };
 
-  config = lib.mkIf config.waybar.enable {
+  config = lib.mkIf config.myHome.waybar.enable {
     home.file = {
       ".config/waybar" = {
         source = ./config;

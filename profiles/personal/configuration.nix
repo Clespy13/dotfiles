@@ -9,7 +9,7 @@
       # <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
+      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -20,23 +20,18 @@
     ];
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];
-    initrd.verbose = false;
-    consoleLogLevel = 0;
+    # initrd.verbose = false;
+    # consoleLogLevel = 0;
 
-    bootspec.enable = true;
+    # bootspec.enable = true;
 
     loader = {
-      systemd-boot.enable = lib.mkForce true;
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-
-    #   lanzaboote = {
-    #     enable = true;
-    #     pkiBundle = "/etc/secureboot";
-    #   };
   };
 
-   nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   #boot.loader.systemd-boot.enable = true;
   #boot.loader.efi.canTouchEfiVariables = true;
@@ -105,6 +100,7 @@
   home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit inputs unstable outputs; };
+    users."clem" = import ./home.nix;
   };
 
   # Allow unfree packages
