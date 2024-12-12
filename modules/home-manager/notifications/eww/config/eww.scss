@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.powermenu-window {
+  border-radius: 10px;
+  background-color: #292F38;
+}
+
+.powermenu-button-area {
+  margin-top: 37.5px;
+  margin-bottom: 37.5px;
+}
+
+.powermenu-button {
+  min-width: 75px;
+  min-height: 75px;
+  margin: 0 5px;
+  border: none;
+  outline: none;
+  background-color: #363D49;
+}
+
+.powermenu-button:hover {
+  background-color: #81A1C1;
+}
+
+.powermenu-button:active {
+  background-color: #7B97B3;
+}
+
+.powermenu-button label {
+  color: #ffffff;
+  font-size: 20px;
+  font-family: "Roboto", monospace;
+}

@@ -1,8 +1,9 @@
-{ inputs, config, lib, pkgs, ... } :
+{ inputs, config, lib, pkgs, unstable, ... } :
 {
   imports = [
     ./user.nix
     ./gaming.nix
+    ./sddm
   ];
 
   config = with lib; {
@@ -12,7 +13,7 @@
       kernelParams = [
         "usbcore.autosuspend=-1"
       ];
-      kernelPackages = pkgs.linuxPackages_latest;
+      kernelPackages = pkgs.linuxPackages_6_11;
       supportedFilesystems = [ "ntfs" ];
       # initrd.verbose = false;
       # consoleLogLevel = 0;
@@ -67,12 +68,19 @@
       dejavu_fonts
       ipafont
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       nerdfonts
       source-code-pro
       twemoji-color-font
     ];
+
+    nixpkgs.config.permittedInsecurePackages = [
+     "dotnet-sdk-wrapped-6.0.428"
+     "dotnet-runtime-6.0.36"
+     "dotnet-sdk-6.0.428"
+    ];
+
 
     virtualisation.docker = {
       enable = true;
@@ -131,16 +139,6 @@
       openjdk17-bootstrap
       jdk17
 
-      dotnet-sdk_7
-      dotnet-runtime_7
-      dotnet-aspnetcore_7
-      dotnetbuildhelpers
-      dotnetPackages.Nuget
-      ntfs3g
-      zulu
-      zulu11
-      zulu17
-      zulu8
       wdisplays
 
       brightnessctl
@@ -163,7 +161,6 @@
       ];
     };
 
-    sound.enable = true;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
@@ -186,6 +183,8 @@
     };
 
     environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.brave}/bin/brave";
+
+    programs.nix-ld.enable = true;
 
     #system.stateversion = "23.11";
   };

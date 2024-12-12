@@ -23,8 +23,7 @@
     nvim.enable = true;
     tmux.enable = true;
     waybar.enable = true;
-    bluetooth.enable = true;
-    alacritty.enable = false;
+    alacritty.enable = true;
     oh-my-posh.enable = true;
     zsh.enable = true;
   };
@@ -43,19 +42,5 @@
      ripgrep
      fd
      direnv
-     unstable.alacritty
    ];
-
-  # programs.alacritty = {
-  #   enable = true;
-  #   settings = {
-  #     env = { TERM = "alacritty"; };
-  #     font = {
-  #       normal = {
-  #         family = "FiraCode";
-  #       };
-  #       size = 16.0;
-  #     };
-  #   };
-  # };
 }

@@ -5,7 +5,7 @@
   config = lib.mkIf config.myHome.misc.enable {
     home.packages = with pkgs; [
       prismlauncher
-      unstable.appflowy
+      appflowy
       lolcat
       asciiquarium
       spotify

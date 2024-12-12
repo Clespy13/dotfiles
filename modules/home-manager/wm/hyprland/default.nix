@@ -32,7 +32,7 @@
 
     home.packages = with pkgs; [
       wayland
-      unstable.waybar
+      waybar
       wayidle
       wl-clipboard
       rofi-wayland
@@ -47,9 +47,9 @@
 
       hyprpicker
       hyprpaper
-      unstable.hypridle
-      unstable.hyprlock
-      unstable.hyprcursor
+      hypridle
+      hyprlock
+      hyprcursor
 
       wayland-scanner
       wayland-utils
@@ -84,7 +84,7 @@
       enable = true;
       systemd.enable = true;
       xwayland.enable = true;
-      package = unstable.hyprland;
+      package = pkgs.hyprland;
       settings = import ./config.nix;
     };
   };

@@ -27,7 +27,6 @@
       clang-tools
       lua
       go
-      python311
     ];
   };
 }

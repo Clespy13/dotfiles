@@ -8,6 +8,9 @@
 
   config = {
     hardware = lib.mkIf config.mySystem.gaming.enable {
+      bluetooth.enable = true;
+      bluetooth.powerOnBoot = true;
+
       nvidia = {
         package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
           version = "555.58.02";
@@ -33,12 +36,12 @@
         powerManagement.enable = true;
         powerManagement.finegrained = true;
       };
-      opengl = {
+      graphics = {
         package = unstable.mesa.drivers;
         package32 = unstable.pkgsi686Linux.mesa.drivers;
+        # driSupport = true;
+        # driSupport32Bit = true;
         enable = true;
-        driSupport = true;
-        driSupport32Bit = true;
         extraPackages = with pkgs; [
           libva
           vaapiVdpau
@@ -70,10 +73,9 @@
 
     };
 
+
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    #hardware.bluetooth.enable = true;
-    #hardware.bluetooth.powerOnBoot = true;
     #hardware.pulseaudio.enable = true;
     services.blueman.enable = true;
 

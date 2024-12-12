@@ -1,0 +1,63 @@
+(defwidget powermenu-button [path onclick]
+    (button :class "powermenu-button"
+            :onclick onclick
+            (image :path path
+                   :image-width 50
+                   :image-height 50)
+    )
+)
+
+(defwidget powermenu-button-poweroff []
+    (powermenu-button :path "Shutdown" :onclick "poweroff"
+    )
+)
+
+(defwidget powermenu-button-reboot []
+    (powermenu-button :path "Reboot" :onclick "reboot"
+    )
+)
+
+(defwidget powermenu-button-sleep []
+    (powermenu-button :path "Sleep" :onclick "systemctl suspend"
+    )
+)
+
+(defwidget powermenu-button-lock []
+    (powermenu-button :path "/home/clem/Downloads/lock.png" :onclick ""
+    )
+)
+
+(defwidget powermenu-button-logout []
+    (powermenu-button :path "Logout" :onclick "hyprctl dispacth exit"
+    )
+)
+
+(defwidget powermenu-window []
+           (box :space-evenly false
+                :orientation "v"
+                :class "powermenu-window"
+                (box :space-evenly true
+                     :orientation "h"
+                     :class "powermenu-button-area"
+                     (powermenu-button-lock)
+                     (powermenu-button-sleep)
+                     (powermenu-button-logout)
+                     (powermenu-button-reboot)
+                     (powermenu-button-poweroff)
+                )
+           )
+)
+
+(defwindow powermenu
+           :monitor 0
+           :geometry (geometry :x "0px"
+                               :y "0px"
+                               :width "400px"
+                               :height "150px"
+                               :anchor "center"
+                     )
+           :stacking "overlay"
+           :windowtype "normal"
+           :wm-ignore true
+           (powermenu-window)
+)
