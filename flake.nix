@@ -2,13 +2,18 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };    
 
     plugin-tiger-vim.url = "github:chclouse/tiger-vim";
     plugin-tiger-vim.flake = false;
@@ -46,6 +51,15 @@
             specialArgs = {
               inherit inputs outputs unstable;
             };
+          };
+
+          server = lib.nixosSystem {
+            specialArgs = { inherit inputs; };
+            modules = [ 
+              ./profiles/server
+              nixosModules
+              home-manager.nixosModules.default
+            ];
           };
         };
     };

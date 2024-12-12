@@ -6,6 +6,7 @@
 
   mySystem = {
     user = "clem";
+    # my-packages.enable = true;
     home-manager = {
       enable = true;
       home = ./home.nix;
