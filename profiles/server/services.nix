@@ -13,7 +13,7 @@
          PASSWORD=$(cat ${config.sops.secrets."dyndns/password".path})
          
          HOST_IP=$(dig +short $HOST)
-         CURRENT_IP=$(curl ifconfig.co)
+         CURRENT_IP=$(curl api.ipify.org)
          
          echo "Run dyndns"
          echo "Current IP: $CURRENT_IP" 
@@ -36,7 +36,7 @@
        serviceConfig = {
          User = config.users.users.server.name;
        };
-       startAt = "*-*-* *:10:00";
+       startAt = "*:0/10:00";
      };
   };
 }

@@ -3,6 +3,11 @@
   imports = [
     ./hardware-configuration.nix
     ./services.nix
+    ./vpn.nix
+    ./proxy.nix
+    ./vault.nix
+    ./zsh.nix
+    ./media.nix
     inputs.sops-nix.nixosModules.sops
   ];
 
@@ -50,6 +55,12 @@
       "dyndns/password" = {
          owner = config.users.users.server.name;
        };
+      "wg0/priv_key" = {
+         owner = config.users.users.server.name;
+      };
+      "ovh/app_creds" = {
+         owner = config.users.users.server.name;
+      };
     };
   };
 
@@ -69,13 +80,47 @@
     ports = [ 6315 ];
     openFirewall = true;
     settings = {
+      PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
   };
 
-  environment.variables = {
-    EDITOR="vim";
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
   };
-  
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    vimAlias = true;
+  };
+
+  users.users.server.extraGroups = [ "docker" ];
+
+  # services.getty.autologinUser = "server";
+  security.sudo = {
+    enable = true;
+    extraRules = [{
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/reboot";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+      groups = [ "wheel" ];
+    }];
+  };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "aspnetcore-runtime-wrapped-6.0.36"
+    "aspnetcore-runtime-6.0.36"
+    "dotnet-sdk-wrapped-6.0.428"
+    "dotnet-sdk-6.0.428"
+  ];
+
   system.stateVersion = "24.11";
 }
