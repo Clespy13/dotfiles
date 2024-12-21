@@ -31,11 +31,13 @@ in
     {
       "vault.local.clespy.fr" = proxy 8222;
       "jellyfin.local.clespy.fr" = proxy 8096;
+      "jellyseerr.local.clespy.fr" = proxy 5055;
       "radarr.local.clespy.fr" = proxy 7878;
       "sonarr.local.clespy.fr" = proxy 8989;
       "bazarr.local.clespy.fr" = proxy 6767;
       "prowlarr.local.clespy.fr" = proxy 9696;
       "lidarr.local.clespy.fr" = proxy 8686;
+      "homarr.local.clespy.fr" = proxy 7575;
       "transmission.local.clespy.fr" = proxy 9091;
     };
   };

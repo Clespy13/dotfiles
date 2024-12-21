@@ -5,6 +5,7 @@ let
  setclients = {
    "10.100.0.2" = "192.168.1.14";
    "10.100.0.3" = "192.168.1.15";
+   "10.100.0.10" = "192.168.1.30";
  };
 in
 {
@@ -59,6 +60,10 @@ in
             { # Clespy's Phone
               publicKey = "eEAxBdoyFv3usV42YORDB/dWwEzRu23zFo8Qc5mT5Ak=";
               allowedIPs = [ "10.100.0.3/32" ];
+            }
+            { # Kolowy's PC
+              publicKey = "gtYTSa+mdLWDWmsX/POs92MI3j3si/8ZTz/ML1VYylk=";
+              allowedIPs = [ "10.100.0.10/32" ];
             }
           ];
         };

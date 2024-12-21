@@ -1,6 +1,7 @@
 {config, lib, pkgs, ...}:
 {
   services.jellyfin.enable = true;
+  services.jellyseerr.enable = true;
 
   services.radarr.enable = true;
   services.sonarr.enable = true;
