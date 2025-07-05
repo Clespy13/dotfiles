@@ -1,5 +1,0 @@
-{
-	"domain": "*.local.clespy.fr",
-	"certUrl": "https://acme-v02.api.letsencrypt.org/acme/cert/0373068e01dab9b3c117759a323de5ef14d6",
-	"certStableUrl": "https://acme-v02.api.letsencrypt.org/acme/cert/0373068e01dab9b3c117759a323de5ef14d6"
-}
