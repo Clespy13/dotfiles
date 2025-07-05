@@ -3,7 +3,25 @@ let
   secrets = config.sops.secrets;
 in
 {
-  # networking.firewall.allowedTCPPorts = [ 51821 ];
+  services.cloudflared = {
+    enable = true;
+    tunnels = {
+      "6c9f1f6c-5ec1-4300-9844-9ac2b0c6cb64" = {
+        credentialsFile = secrets."cloudflared/homelab".path;
+	ingress = {
+	  "clespy.fr" = "http://127.0.0.1:8080";
+	  "www.clespy.fr" = "http://127.0.0.1:8080";
+	  "notes.clespy.fr" = "http://127.0.0.1:8181";
+	  "jellyfin.clespy.fr" = "http://127.0.0.1:8096";
+	  "jellyseerr.clespy.fr" = "http://127.0.0.1:5055";
+	  "authentik.clespy.fr" = "http://127.0.0.1:9001";
+	  "glance.clespy.fr" = "http://127.0.0.1:61208";
+      	  "vault.clespy.fr" = "http://127.0.0.1:8222";
+	};
+        default = "http_status:404";
+      };
+    };
+  };
 
   services.nginx = {
     enable = true;
@@ -29,9 +47,17 @@ in
       };
     in
     {
-      "vault.local.clespy.fr" = proxy 8222;
-      "jellyfin.local.clespy.fr" = proxy 8096;
-      "jellyseerr.local.clespy.fr" = proxy 5055;
+      default = {
+        forceSSL = true;
+        useACMEHost = "local.clespy.fr";
+        default = true;
+        serverName = "_";
+	listenAddresses = [ "0.0.0.0" ];
+        locations."/" = {
+          return = "404";
+        };
+      };
+    } // {
       "radarr.local.clespy.fr" = proxy 7878;
       "sonarr.local.clespy.fr" = proxy 8989;
       "bazarr.local.clespy.fr" = proxy 6767;
@@ -39,7 +65,18 @@ in
       "lidarr.local.clespy.fr" = proxy 8686;
       "homarr.local.clespy.fr" = proxy 7575;
       "transmission.local.clespy.fr" = proxy 9091;
+      "flaresolverr.local.clespy.fr" = proxy 8191;
+      "mealie.local.clespy.fr" = proxy 9000;
+      "nextcloud.local.clespy.fr" = proxy 51821;
+      "photos.local.clespy.fr" = proxy 2283;
     };
+    # // {
+    #   "nextcloud.clespy.fr" = {
+    #     forceSSL = true;
+    #     enableACME = true;
+    #     locations."/".proxyPass = "http://127.0.0.1:51821/";
+    #   };
+    # };
   };
 
   security.acme = {
@@ -50,9 +87,11 @@ in
         domain = "clespy.fr";
         email = "local+acme@clespy.fr";
         extraDomainNames = [ "*.local.clespy.fr" ];
-        dnsProvider = "ovh";
+        dnsProvider = "cloudflare";
         dnsPropagationCheck = true;
-        credentialsFile = "${secrets."ovh/app_creds".path}";
+        credentialFiles = {
+		"CF_DNS_API_TOKEN_FILE" = "${secrets."cf/api_token".path}";
+	};
       };
     };
   };

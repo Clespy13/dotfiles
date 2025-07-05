@@ -14,6 +14,7 @@
   mySystem = {
     user = {
       name = "server";
+      groups = ["networkmanager" "wheel" "docker" "cloudflared"];
       sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB0xxARWrpShMEMg5BBvQZh1hUAdnJor4exhINClZnd7";
     };
   };
@@ -39,6 +40,9 @@
     git
     dig
     sops
+    tree
+    ncdu
+    ethtool
   ];
 
   sops = {
@@ -49,17 +53,24 @@
     };
 
     secrets = {
-      "dyndns/login" = {
+      "dyndns/password" = {
          owner = config.users.users.server.name;
        };
-      "dyndns/password" = {
+      "dyndns/zoneid" = {
+         owner = config.users.users.server.name;
+       };
+      "dyndns/recordid" = {
          owner = config.users.users.server.name;
        };
       "wg0/priv_key" = {
          owner = config.users.users.server.name;
       };
-      "ovh/app_creds" = {
+      "cf/api_token" = {
          owner = config.users.users.server.name;
+      };
+      "cloudflared/homelab" = {
+	 owner = config.services.cloudflared.user;
+	 group = config.services.cloudflared.group;
       };
     };
   };
@@ -107,13 +118,15 @@
     extraRules = [{
       commands = [
         {
-          command = "/run/current-system/sw/bin/reboot";
+          command = "${pkgs.systemd}/bin/reboot";
           options = [ "NOPASSWD" ];
         }
       ];
       groups = [ "wheel" ];
     }];
   };
+
+  networking.interfaces.enp1s0.wakeOnLan.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "aspnetcore-runtime-wrapped-6.0.36"

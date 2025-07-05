@@ -5,7 +5,7 @@ let
  setclients = {
    "10.100.0.2" = "192.168.1.14";
    "10.100.0.3" = "192.168.1.15";
-   "10.100.0.10" = "192.168.1.30";
+   "10.100.0.4" = "192.168.1.20";
  };
 in
 {
@@ -13,13 +13,15 @@ in
     wireguard-tools
   ];
 
+  systemd.services.NetworkManager-wait-online.enable = false; # temporary waiting for nixos to fix the bug
+
   networking = {
     nat = {
       enable = true;
       externalInterface = "enp1s0";
       internalInterfaces = [ "wg0" ];
     };
-    firewall.allowedUDPPorts = [ 51820 ];
+    # firewall.allowedUDPPorts = [ 51820 ];
 
     nftables.enable = true;
     nftables.tables.gateway-nat =
@@ -62,8 +64,8 @@ in
               allowedIPs = [ "10.100.0.3/32" ];
             }
             { # Kolowy's PC
-              publicKey = "gtYTSa+mdLWDWmsX/POs92MI3j3si/8ZTz/ML1VYylk=";
-              allowedIPs = [ "10.100.0.10/32" ];
+              publicKey = "kmJnypr1aiJjx7k5he8cKwzLgU5GL9N2g45WOsPIkkg=";
+              allowedIPs = [ "10.100.0.4/32" ];
             }
           ];
         };

@@ -5,7 +5,10 @@
   ];
 
   mySystem = {
-    user = "clem";
+    user = {
+      name = "clem";
+      groups = ["networkmanager" "wheel" "video" "audio" "docker" "scanner" "lp"];
+    };
     # my-packages.enable = true;
     home-manager = {
       enable = true;

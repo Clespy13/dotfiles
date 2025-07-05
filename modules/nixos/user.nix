@@ -6,6 +6,10 @@
         default = "longer";
         type = lib.types.str;
       };
+      groups = lib.mkOption {
+        default = [];
+	type = lib.types.listOf lib.types.str;
+      };
       sshKey = lib.mkOption {
 	default = "";
         type = lib.types.str;
@@ -166,7 +170,7 @@
       defaultUserShell = pkgs.zsh;
       users.${config.mySystem.user.name} = {
         isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" "video" "audio" "docker" "scanner" "lp" ];
+        extraGroups = config.mySystem.user.groups; # [ "networkmanager" "wheel" "video" "audio" "docker" "scanner" "lp" ];
         openssh.authorizedKeys.keys = [ "${config.mySystem.user.sshKey}" ];
       };
     };
