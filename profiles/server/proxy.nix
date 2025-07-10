@@ -63,7 +63,6 @@ in
       "bazarr.local.clespy.fr" = proxy 6767;
       "prowlarr.local.clespy.fr" = proxy 9696;
       "lidarr.local.clespy.fr" = proxy 8686;
-      "homarr.local.clespy.fr" = proxy 7575;
       "transmission.local.clespy.fr" = proxy 9091;
       "flaresolverr.local.clespy.fr" = proxy 8191;
       "mealie.local.clespy.fr" = proxy 9000;
